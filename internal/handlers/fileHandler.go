@@ -19,7 +19,7 @@ type (
 )
 
 const (
-	maxFileSizeMb = 1
+	maxFileSizeMb = 50
 )
 
 func SaveFile(c echo.Context) error {
