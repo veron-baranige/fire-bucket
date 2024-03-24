@@ -11,6 +11,7 @@ import (
 
 	_ "github.com/veron-baranige/fire-bucket/docs/swagger"
 	"github.com/veron-baranige/fire-bucket/internal/config"
+	db "github.com/veron-baranige/fire-bucket/internal/database"
 )
 
 // @title Fire-Bucket
@@ -25,8 +26,15 @@ func main() {
 
 	if err := config.LoadEnv("."); err != nil {
 		slog.Error("Failed to load environment variables", "err", err)
+		os.Exit(1)
 	}
 	slog.Info("Loaded configurations")
+
+	if err := db.SetupClient(); err != nil {
+		slog.Error("Failed establish database connection", "err", err)
+		os.Exit(1)
+	}
+	slog.Info("Established database connection")
 
 	e := echo.New()
 	e.Use(middleware.Recover())
