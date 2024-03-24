@@ -1,4 +1,10 @@
 basePath: /api
+definitions:
+  handlers.FileUploadResponse:
+    properties:
+      fileId:
+        type: string
+    type: object
 host: http://localhost:8000
 info:
   contact:
@@ -7,5 +13,27 @@ info:
   description: API for uploading and retrieving files through Firebase Storage
   title: Fire-Bucket
   version: "1.0"
-paths: {}
+paths:
+  /api/files:
+    post:
+      consumes:
+      - multipart/form-data
+      parameters:
+      - description: File to upload
+        in: formData
+        name: file
+        required: true
+        type: file
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/handlers.FileUploadResponse'
+        "400":
+          description: Bad Request
+        "500":
+          description: Internal Server Error
+      summary: Upload New File
+      tags:
+      - Files
 swagger: "2.0"

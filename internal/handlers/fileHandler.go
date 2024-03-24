@@ -22,6 +22,14 @@ const (
 	maxFileSizeMb = 50
 )
 
+// @Summary Upload New File
+// @Accept multipart/form-data
+// @Param file formData file true "File to upload"
+// @Success 201 {object} FileUploadResponse
+// @Failure 400
+// @Failure 500
+// @Router /api/files [post]
+// @Tags Files
 func SaveFile(c echo.Context) error {
 	slog.Info("Received file upload request")
 
