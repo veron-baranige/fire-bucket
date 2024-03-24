@@ -47,7 +47,7 @@ func main() {
 	e := echo.New()
 
 	e.Use(middleware.Recover())
-	e.Pre(middleware.AddTrailingSlash())
+	e.Pre(middleware.RemoveTrailingSlash())
 	setupRoutes(e)
 	
 	if err := e.Start(":" + config.Get(config.ServerPort)); err != nil {
