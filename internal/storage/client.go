@@ -3,7 +3,6 @@ package storage
 import (
 	"context"
 	"encoding/json"
-	"net/http"
 	"time"
 
 	"cloud.google.com/go/storage"
@@ -14,8 +13,9 @@ import (
 
 type (
 	FileUpload struct {
-		content []byte
-		path    string
+		Content  []byte
+		Path     string
+		MimeType string
 	}
 )
 
@@ -55,12 +55,12 @@ func Setup() error {
 }
 
 func Upload(ctx context.Context, file FileUpload) error {
-	writer := bucket.Object(file.path).NewWriter(ctx)
+	writer := bucket.Object(file.Path).NewWriter(ctx)
 	writer.Metadata = map[string]string{
-		"Content-Type": http.DetectContentType(file.content),
+		"Content-Type": file.MimeType,
 	}
 
-	if _, err := writer.Write(file.content); err != nil {
+	if _, err := writer.Write(file.Content); err != nil {
 		return err
 	}
 	return nil
@@ -68,11 +68,11 @@ func Upload(ctx context.Context, file FileUpload) error {
 
 func GetSignedUrl(filePath string) (string, error) {
 	url, err := bucket.SignedURL(filePath, &storage.SignedURLOptions{
-		Method: "GET",
+		Method:  "GET",
 		Expires: time.Now().Add(signedUrlExp),
 	})
-	if err!= nil {
-        return "", err
-    }
+	if err != nil {
+		return "", err
+	}
 	return url, nil
 }
