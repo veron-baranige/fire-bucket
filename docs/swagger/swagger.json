@@ -1,0 +1,98 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "API for uploading and retrieving files through Firebase Storage",
+        "title": "Fire-Bucket",
+        "contact": {
+            "name": "Veron Baranige",
+            "email": "veronsajendra@gmail.com"
+        },
+        "version": "1.0"
+    },
+    "host": "http://localhost:8000",
+    "basePath": "/api",
+    "paths": {
+        "/api/files": {
+            "post": {
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "tags": [
+                    "Files"
+                ],
+                "summary": "Upload New File",
+                "parameters": [
+                    {
+                        "type": "file",
+                        "description": "File to upload",
+                        "name": "file",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.FileUploadResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/api/files/{id}": {
+            "get": {
+                "tags": [
+                    "Files"
+                ],
+                "summary": "Retrieve Uploaded File",
+                "operationId": "getResourceByID",
+                "responses": {
+                    "307": {
+                        "description": "Temporary Redirect"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Files"
+                ],
+                "summary": "Delete Uploaded File",
+                "operationId": "getResourceByID",
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "handlers.FileUploadResponse": {
+            "type": "object",
+            "properties": {
+                "fileId": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
