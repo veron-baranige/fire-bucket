@@ -39,6 +39,11 @@ const (
 	DbPassword ConfigKey = "DB_PASSWORD"
 
 	FirebaseBucket ConfigKey = "FIREBASE_STORAGE_BUCKET"
+	FileUploadDir  ConfigKey = "FILE_UPLOAD_DIR"
+)
+
+const (
+	fileUploadDir = "uploads"
 )
 
 var (
@@ -63,6 +68,9 @@ func LoadEnv(configPath string) error {
 	if err := viper.Unmarshal(&firebaseConf); err != nil {
 		return err
 	}
+
+	// internal configs
+	viper.Set(string(FileUploadDir), fileUploadDir)
 
 	return nil
 }
