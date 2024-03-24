@@ -120,7 +120,7 @@ func GetFile(c echo.Context) error {
         slog.Error("Failed to get signed url", "err", err, "file.FilePath", file.FilePath)
         return echo.ErrInternalServerError
     }
-	slog.Info("Retrieved signed url", "url", url)
+	slog.Info("Retrieved signed url")
 
 	return c.Redirect(http.StatusTemporaryRedirect, url)
 }
