@@ -5,6 +5,7 @@ go 1.22.0
 require (
 	cloud.google.com/go/storage v1.35.1
 	firebase.google.com/go/v4 v4.13.0
+	github.com/google/uuid v1.4.0
 	github.com/labstack/echo/v4 v4.11.4
 	github.com/lmittmann/tint v1.0.4
 	github.com/spf13/viper v1.18.2
@@ -26,7 +27,6 @@ require (
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/google/s2a-go v0.1.7 // indirect
-	github.com/google/uuid v1.4.0 // indirect
 	github.com/googleapis/enterprise-certificate-proxy v0.3.2 // indirect
 	github.com/googleapis/gax-go/v2 v2.12.0 // indirect
 	go.opencensus.io v0.24.0 // indirect
