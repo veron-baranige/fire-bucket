@@ -37,6 +37,18 @@ paths:
       tags:
       - Files
   /api/files/{id}:
+    delete:
+      operationId: getResourceByID
+      responses:
+        "204":
+          description: No Content
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+      summary: Delete Uploaded File
+      tags:
+      - Files
     get:
       operationId: getResourceByID
       responses:

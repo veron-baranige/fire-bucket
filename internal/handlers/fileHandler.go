@@ -125,6 +125,13 @@ func GetFile(c echo.Context) error {
 	return c.Redirect(http.StatusTemporaryRedirect, url)
 }
 
+// @Summary Delete Uploaded File
+// @ID getResourceByID
+// @Success 204
+// @Failure 404
+// @Failure 500
+// @Router /api/files/{id} [delete]
+// @Tags Files
 func DeleteFile(c echo.Context) error {
 	slog.Info("Received file delete request")
 
