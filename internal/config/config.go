@@ -12,6 +12,17 @@ type (
 		DbName     string `mapstructure:"DB_NAME"`
 		DbUser     string `mapstructure:"DB_USER"`
 		DbPassword string `mapstructure:"DB_PASSWORD"`
+
+		FirebaseBucket string `mapstructure:"FIREBASE_STORAGE_BUCKET"`
+	}
+
+	firebaseCredentials struct {
+		AccountType  string `mapstructure:"FIREBASE_ACCOUNT_TYPE" json:"type"`
+		ProjectId    string `mapstructure:"FIREBASE_PROJECT_ID" json:"project_id"`
+		PrivateKeyId string `mapstructure:"FIREBASE_PRIVATE_KEY_ID" json:"private_key_id"`
+		PrivateKey   string `mapstructure:"FIREBASE_PRIVATE_KEY" json:"private_key"`
+		ClientEmail  string `mapstructure:"FIREBASE_CLIENT_EMAIL" json:"client_email"`
+		ClientId     string `mapstructure:"FIREBASE_CLIENT_ID" json:"client_id"`
 	}
 
 	ConfigKey string
@@ -20,12 +31,18 @@ type (
 const (
 	ServerPort ConfigKey = "SERVER_PORT"
 
-    DbDriver   ConfigKey = "DB_DRIVER"
-    DbHost     ConfigKey = "DB_HOST"
-    DbPort     ConfigKey = "DB_PORT"
-    DbName     ConfigKey = "DB_NAME"
-    DbUser     ConfigKey = "DB_USER"
-    DbPassword ConfigKey = "DB_PASSWORD"
+	DbDriver   ConfigKey = "DB_DRIVER"
+	DbHost     ConfigKey = "DB_HOST"
+	DbPort     ConfigKey = "DB_PORT"
+	DbName     ConfigKey = "DB_NAME"
+	DbUser     ConfigKey = "DB_USER"
+	DbPassword ConfigKey = "DB_PASSWORD"
+
+	FirebaseBucket ConfigKey = "FIREBASE_STORAGE_BUCKET"
+)
+
+var (
+	firebaseConf firebaseCredentials
 )
 
 func LoadEnv(configPath string) error {
@@ -39,7 +56,11 @@ func LoadEnv(configPath string) error {
 	}
 
 	var env envConfig
-	if err := viper.UnmarshalExact(&env); err != nil {
+	if err := viper.Unmarshal(&env); err != nil {
+		return err
+	}
+
+	if err := viper.Unmarshal(&firebaseConf); err != nil {
 		return err
 	}
 
@@ -48,4 +69,8 @@ func LoadEnv(configPath string) error {
 
 func Get(key ConfigKey) string {
 	return viper.GetString(string(key))
+}
+
+func GetFirebaseCredentials() firebaseCredentials {
+	return firebaseConf
 }
