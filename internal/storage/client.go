@@ -50,7 +50,7 @@ func Setup() error {
 	if err != nil {
 		return err
 	}
-
+	
 	return nil
 }
 
@@ -63,7 +63,8 @@ func Upload(ctx context.Context, file FileUpload) error {
 	if _, err := writer.Write(file.Content); err != nil {
 		return err
 	}
-	return nil
+
+	return writer.Close()
 }
 
 func GetSignedUrl(filePath string) (string, error) {
