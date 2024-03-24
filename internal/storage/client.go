@@ -68,12 +68,8 @@ func Upload(ctx context.Context, file FileUpload) error {
 }
 
 func GetSignedUrl(filePath string) (string, error) {
-	url, err := bucket.SignedURL(filePath, &storage.SignedURLOptions{
+	return bucket.SignedURL(filePath, &storage.SignedURLOptions{
 		Method:  "GET",
 		Expires: time.Now().Add(signedUrlExp),
 	})
-	if err != nil {
-		return "", err
-	}
-	return url, nil
 }
