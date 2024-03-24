@@ -36,4 +36,17 @@ paths:
       summary: Upload New File
       tags:
       - Files
+  /api/files/{id}:
+    get:
+      operationId: getResourceByID
+      responses:
+        "307":
+          description: Temporary Redirect
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+      summary: Retrieve Uploaded File
+      tags:
+      - Files
 swagger: "2.0"

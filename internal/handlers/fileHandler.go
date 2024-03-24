@@ -93,6 +93,13 @@ func bytesToMB(bytes int64) float64 {
 	return float64(bytes) / 1048576
 }
 
+// @Summary Retrieve Uploaded File
+// @ID getResourceByID
+// @Success 307 
+// @Failure 404
+// @Failure 500
+// @Router /api/files/{id} [get]
+// @Tags Files
 func GetFile(c echo.Context) error {
 	slog.Info("Received file get request")
 
