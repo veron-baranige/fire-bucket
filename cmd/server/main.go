@@ -12,7 +12,7 @@ import (
 	_ "github.com/veron-baranige/fire-bucket/docs/swagger"
 	"github.com/veron-baranige/fire-bucket/internal/config"
 	db "github.com/veron-baranige/fire-bucket/internal/database"
-	"github.com/veron-baranige/fire-bucket/internal/database/storage"
+	"github.com/veron-baranige/fire-bucket/internal/storage"
 )
 
 // @title Fire-Bucket
