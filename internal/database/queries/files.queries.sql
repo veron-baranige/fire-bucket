@@ -4,9 +4,9 @@ WHERE id = ? LIMIT 1;
 
 -- name: CreateFile :execresult
 INSERT INTO files (
-  id, name, file_path
+  id, name, file_path, type
 ) VALUES (
-  ?, ?, ?
+  ?, ?, ?, ?
 );
 
 -- name: DeleteFile :exec

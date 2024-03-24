@@ -12,9 +12,9 @@ import (
 
 const createFile = `-- name: CreateFile :execresult
 INSERT INTO files (
-  id, name, file_path
+  id, name, file_path, type
 ) VALUES (
-  ?, ?, ?
+  ?, ?, ?, ?
 )
 `
 
@@ -22,10 +22,16 @@ type CreateFileParams struct {
 	ID       string
 	Name     string
 	FilePath string
+	Type     string
 }
 
 func (q *Queries) CreateFile(ctx context.Context, arg CreateFileParams) (sql.Result, error) {
-	return q.db.ExecContext(ctx, createFile, arg.ID, arg.Name, arg.FilePath)
+	return q.db.ExecContext(ctx, createFile,
+		arg.ID,
+		arg.Name,
+		arg.FilePath,
+		arg.Type,
+	)
 }
 
 const deleteFile = `-- name: DeleteFile :exec
@@ -38,7 +44,7 @@ func (q *Queries) DeleteFile(ctx context.Context, id string) error {
 }
 
 const getFile = `-- name: GetFile :one
-SELECT id, name, file_path, created_at, updated_at FROM files
+SELECT id, name, file_path, type, created_at, updated_at FROM files
 WHERE id = ? LIMIT 1
 `
 
@@ -49,6 +55,7 @@ func (q *Queries) GetFile(ctx context.Context, id string) (File, error) {
 		&i.ID,
 		&i.Name,
 		&i.FilePath,
+		&i.Type,
 		&i.CreatedAt,
 		&i.UpdatedAt,
 	)

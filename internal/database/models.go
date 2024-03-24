@@ -12,6 +12,7 @@ type File struct {
 	ID        string
 	Name      string
 	FilePath  string
+	Type      string
 	CreatedAt sql.NullTime
 	UpdatedAt sql.NullTime
 }
