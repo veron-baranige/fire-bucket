@@ -28,6 +28,15 @@ func (q *Queries) CreateFile(ctx context.Context, arg CreateFileParams) (sql.Res
 	return q.db.ExecContext(ctx, createFile, arg.ID, arg.Name, arg.FilePath)
 }
 
+const deleteFile = `-- name: DeleteFile :exec
+DELETE FROM files WHERE id = ?
+`
+
+func (q *Queries) DeleteFile(ctx context.Context, id string) error {
+	_, err := q.db.ExecContext(ctx, deleteFile, id)
+	return err
+}
+
 const getFile = `-- name: GetFile :one
 SELECT id, name, file_path, created_at, updated_at FROM files
 WHERE id = ? LIMIT 1

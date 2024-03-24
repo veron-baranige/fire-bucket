@@ -8,3 +8,6 @@ INSERT INTO files (
 ) VALUES (
   ?, ?, ?
 );
+
+-- name: DeleteFile :exec
+DELETE FROM files WHERE id = ?;
