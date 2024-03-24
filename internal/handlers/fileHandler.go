@@ -2,6 +2,8 @@ package handlers
 
 import (
 	"context"
+	"database/sql"
+	"errors"
 	"log/slog"
 	"net/http"
 
@@ -89,4 +91,29 @@ func SaveFile(c echo.Context) error {
 
 func bytesToMB(bytes int64) float64 {
 	return float64(bytes) / 1048576
+}
+
+func GetFile(c echo.Context) error {
+	slog.Info("Received file get request")
+
+	id := c.Param("id")
+
+	file, err := db.Client.GetFile(context.Background(), id)
+	if err != nil {
+		slog.Error("Failed to get file from database", "err", err, "id", id)
+		if errors.Is(err, sql.ErrNoRows) {
+			return echo.ErrNotFound
+		}
+		return echo.ErrInternalServerError
+	}
+	slog.Error("Retrieved file record from database", "id", id)
+
+	url, err := storage.GetSignedUrl(file.FilePath)
+	if err!= nil {
+        slog.Error("Failed to get signed url", "err", err, "file.FilePath", file.FilePath)
+        return echo.ErrInternalServerError
+    }
+	slog.Info("Retrieved signed url", "url", url)
+
+	return c.Redirect(http.StatusTemporaryRedirect, url)
 }
