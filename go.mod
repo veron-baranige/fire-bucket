@@ -5,7 +5,6 @@ go 1.22.0
 require (
 	cloud.google.com/go/storage v1.35.1
 	firebase.google.com/go/v4 v4.13.0
-	github.com/google/martian/v3 v3.3.2
 	github.com/google/uuid v1.4.0
 	github.com/labstack/echo/v4 v4.11.4
 	github.com/lmittmann/tint v1.0.4
