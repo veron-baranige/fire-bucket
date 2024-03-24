@@ -1,0 +1,11 @@
+basePath: /api
+host: http://localhost:8000
+info:
+  contact:
+    email: veronsajendra@gmail.com
+    name: Veron Baranige
+  description: API for uploading and retrieving files through Firebase Storage
+  title: Fire-Bucket
+  version: "1.0"
+paths: {}
+swagger: "2.0"
