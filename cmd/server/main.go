@@ -12,6 +12,7 @@ import (
 	_ "github.com/veron-baranige/fire-bucket/docs/swagger"
 	"github.com/veron-baranige/fire-bucket/internal/config"
 	db "github.com/veron-baranige/fire-bucket/internal/database"
+	"github.com/veron-baranige/fire-bucket/internal/routes"
 	"github.com/veron-baranige/fire-bucket/internal/storage"
 )
 
@@ -44,9 +45,11 @@ func main() {
 	slog.Info("Established storage bucket connection")
 
 	e := echo.New()
-	e.Use(middleware.Recover())
-	setupRoutes(e)
 
+	e.Use(middleware.Recover())
+	e.Pre(middleware.AddTrailingSlash())
+	setupRoutes(e)
+	
 	if err := e.Start(":" + config.Get(config.ServerPort)); err != nil {
 		slog.Error("Failed to start the server", "err", err)
 	}
@@ -59,4 +62,5 @@ func setupLogger() {
 
 func setupRoutes(e *echo.Echo) {
 	e.GET("/swagger/*", echoSwagger.WrapHandler)
+	routes.SetupFileRoutes(e)
 }
