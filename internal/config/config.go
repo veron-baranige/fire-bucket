@@ -17,12 +17,17 @@ type (
 	}
 
 	firebaseCredentials struct {
-		AccountType  string `mapstructure:"FIREBASE_ACCOUNT_TYPE" json:"type"`
-		ProjectId    string `mapstructure:"FIREBASE_PROJECT_ID" json:"project_id"`
-		PrivateKeyId string `mapstructure:"FIREBASE_PRIVATE_KEY_ID" json:"private_key_id"`
-		PrivateKey   string `mapstructure:"FIREBASE_PRIVATE_KEY" json:"private_key"`
-		ClientEmail  string `mapstructure:"FIREBASE_CLIENT_EMAIL" json:"client_email"`
-		ClientId     string `mapstructure:"FIREBASE_CLIENT_ID" json:"client_id"`
+		AccountType         string `mapstructure:"FIREBASE_ACCOUNT_TYPE" json:"type"`
+		ProjectId           string `mapstructure:"FIREBASE_PROJECT_ID" json:"project_id"`
+		PrivateKeyId        string `mapstructure:"FIREBASE_PRIVATE_KEY_ID" json:"private_key_id"`
+		PrivateKey          string `mapstructure:"FIREBASE_PRIVATE_KEY" json:"private_key"`
+		ClientEmail         string `mapstructure:"FIREBASE_CLIENT_EMAIL" json:"client_email"`
+		ClientId            string `mapstructure:"FIREBASE_CLIENT_ID" json:"client_id"`
+		AuthUri             string `mapstructure:"FIREBASE_AUTH_URI" json:"auth_uri"`
+		TokenUri            string `mapstructure:"FIREBASE_TOKEN_URI" json:"token_uri"`
+		AuthProviderCertUrl string `mapstructure:"FIREBASE_AUTH_PROVIDER_CERT_URL" json:"auth_provider_x509_cert_url"`
+		ClientCertUrl       string `mapstructure:"FIREBASE_CLIENT_CERT_URL" json:"client_x509_cert_url"`
+		UniverseDomain      string `mapstructure:"FIREBASE_UNIVERSE_DOMAIN" json:"universe_domain"`
 	}
 
 	ConfigKey string
