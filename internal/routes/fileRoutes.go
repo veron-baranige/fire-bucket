@@ -9,4 +9,5 @@ func SetupFileRoutes(e *echo.Echo) {
 	r := e.Group("/api/files")
 	
 	r.POST("", handlers.SaveFile)
+	r.GET("/:id", handlers.GetFile)
 }
