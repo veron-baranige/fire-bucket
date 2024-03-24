@@ -1,0 +1,17 @@
+version: '3.9'
+
+volumes:
+  mysql_data:
+    driver: local
+
+services:
+  db:
+    container_name: fire-bucket-db
+    image: mysql:8
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_USER=app-user
+      - MYSQL_PASSWORD=appuser123
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=firebucket
