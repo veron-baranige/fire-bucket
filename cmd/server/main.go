@@ -12,6 +12,7 @@ import (
 	_ "github.com/veron-baranige/fire-bucket/docs/swagger"
 	"github.com/veron-baranige/fire-bucket/internal/config"
 	db "github.com/veron-baranige/fire-bucket/internal/database"
+	"github.com/veron-baranige/fire-bucket/internal/database/storage"
 )
 
 // @title Fire-Bucket
@@ -35,6 +36,12 @@ func main() {
 		os.Exit(1)
 	}
 	slog.Info("Established database connection")
+
+	if err := storage.Setup(); err != nil {
+		slog.Error("Failed aquire storage bucekt connection", "err", err)
+		os.Exit(1)
+	}
+	slog.Info("Established storage bucket connection")
 
 	e := echo.New()
 	e.Use(middleware.Recover())
