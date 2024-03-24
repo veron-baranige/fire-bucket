@@ -73,3 +73,7 @@ func GetSignedUrl(filePath string) (string, error) {
 		Expires: time.Now().Add(signedUrlExp),
 	})
 }
+
+func RemoveFromBucket(ctx context.Context, filePath string) error {
+	return bucket.Object(filePath).Delete(ctx)
+}
