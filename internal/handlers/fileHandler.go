@@ -124,3 +124,33 @@ func GetFile(c echo.Context) error {
 
 	return c.Redirect(http.StatusTemporaryRedirect, url)
 }
+
+func DeleteFile(c echo.Context) error {
+	slog.Info("Received file delete request")
+
+	id := c.Param("id")
+
+	file, err := db.Client.GetFile(context.Background(), id)
+	if err != nil {
+		slog.Error("Failed to get file from database", "err", err, "id", id)
+		if errors.Is(err, sql.ErrNoRows) {
+			return echo.ErrNotFound
+		}
+		return echo.ErrInternalServerError
+	}
+	slog.Info("Retrieved file record from database", "id", id)
+
+	if err := storage.RemoveFromBucket(context.Background(), file.FilePath); err!= nil {
+        slog.Error("Failed to remove file from storage bucket", "err", err)
+        return echo.ErrInternalServerError
+    }
+	slog.Info("Removed file from storage bucket")
+
+	if err := db.Client.DeleteFile(context.Background(), id); err!= nil {
+        slog.Error("Failed to delete file record from database", "err", err)
+        return echo.ErrInternalServerError
+    }
+	slog.Info("Removed file record from database")
+
+	return c.JSON(http.StatusNoContent, nil)
+}

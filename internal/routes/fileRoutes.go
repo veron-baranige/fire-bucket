@@ -10,4 +10,5 @@ func SetupFileRoutes(e *echo.Echo) {
 	
 	r.POST("", handlers.SaveFile)
 	r.GET("/:id", handlers.GetFile)
+	r.DELETE("/:id", handlers.DeleteFile)
 }
